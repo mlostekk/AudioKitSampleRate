@@ -57,7 +57,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onButtonPress(_ sender: Any) {
-        setupVideo()
+        //setupVideo()
         setupAudio()
     }
 }
