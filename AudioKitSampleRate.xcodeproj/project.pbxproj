@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E70FB2DC232679B9008432EF /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E70FB2DB232679B9008432EF /* AudioKit.framework */; };
+		E70FB2DE232679C0008432EF /* AudioKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E70FB2DB232679B9008432EF /* AudioKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E747D0C4230E82900099E1D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E747D0C3230E82900099E1D4 /* AppDelegate.swift */; };
 		E747D0C6230E82900099E1D4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E747D0C5230E82900099E1D4 /* ViewController.swift */; };
 		E747D0C9230E82900099E1D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E747D0C7230E82900099E1D4 /* Main.storyboard */; };
@@ -14,13 +16,24 @@
 		E747D0CE230E82920099E1D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E747D0CC230E82920099E1D4 /* LaunchScreen.storyboard */; };
 		E7855B7C230E845E000FB9BD /* bunny.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E7855B7B230E845E000FB9BD /* bunny.mp4 */; };
 		E7855B7E230E866B000FB9BD /* sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = E7855B7D230E866B000FB9BD /* sound.wav */; };
-		EE5B7283D9977C1EA31E3081 /* Pods_AudioKitSampleRate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 100FAF270A23762B8C4E4C34 /* Pods_AudioKitSampleRate.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		E70FB2DF232679C0008432EF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E70FB2DE232679C0008432EF /* AudioKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		0506659A10CC06C6C66CFAE5 /* Pods-AudioKitSampleRate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioKitSampleRate.debug.xcconfig"; path = "Target Support Files/Pods-AudioKitSampleRate/Pods-AudioKitSampleRate.debug.xcconfig"; sourceTree = "<group>"; };
-		100FAF270A23762B8C4E4C34 /* Pods_AudioKitSampleRate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AudioKitSampleRate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3569F528CEC8310E50388177 /* Pods-AudioKitSampleRate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioKitSampleRate.release.xcconfig"; path = "Target Support Files/Pods-AudioKitSampleRate/Pods-AudioKitSampleRate.release.xcconfig"; sourceTree = "<group>"; };
+		E70FB2DB232679B9008432EF /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioKit.framework; sourceTree = SOURCE_ROOT; };
 		E747D0C0230E82900099E1D4 /* AudioKitSampleRate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioKitSampleRate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E747D0C3230E82900099E1D4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E747D0C5230E82900099E1D4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -37,7 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE5B7283D9977C1EA31E3081 /* Pods_AudioKitSampleRate.framework in Frameworks */,
+				E70FB2DC232679B9008432EF /* AudioKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,18 +60,8 @@
 		052D0902A9F79AC9A363CCAE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0506659A10CC06C6C66CFAE5 /* Pods-AudioKitSampleRate.debug.xcconfig */,
-				3569F528CEC8310E50388177 /* Pods-AudioKitSampleRate.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		2513EDE2037EB4995A305EB7 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				100FAF270A23762B8C4E4C34 /* Pods_AudioKitSampleRate.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		E747D0B7230E82900099E1D4 = {
@@ -67,7 +70,6 @@
 				E747D0C2230E82900099E1D4 /* AudioKitSampleRate */,
 				E747D0C1230E82900099E1D4 /* Products */,
 				052D0902A9F79AC9A363CCAE /* Pods */,
-				2513EDE2037EB4995A305EB7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -82,6 +84,7 @@
 		E747D0C2230E82900099E1D4 /* AudioKitSampleRate */ = {
 			isa = PBXGroup;
 			children = (
+				E70FB2DB232679B9008432EF /* AudioKit.framework */,
 				E7855B7D230E866B000FB9BD /* sound.wav */,
 				E7855B7B230E845E000FB9BD /* bunny.mp4 */,
 				E747D0C3230E82900099E1D4 /* AppDelegate.swift */,
@@ -101,10 +104,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E747D0D2230E82920099E1D4 /* Build configuration list for PBXNativeTarget "AudioKitSampleRate" */;
 			buildPhases = (
-				0A6B8DEB431D309CBEE800EE /* [CP] Check Pods Manifest.lock */,
 				E747D0BC230E82900099E1D4 /* Sources */,
 				E747D0BD230E82900099E1D4 /* Frameworks */,
 				E747D0BE230E82900099E1D4 /* Resources */,
+				E70FB2DF232679C0008432EF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -162,31 +165,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		0A6B8DEB431D309CBEE800EE /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AudioKitSampleRate-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E747D0BC230E82900099E1D4 /* Sources */ = {
@@ -338,11 +316,14 @@
 		};
 		E747D0D3230E82920099E1D4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0506659A10CC06C6C66CFAE5 /* Pods-AudioKitSampleRate.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z55EW6H4D7;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = AudioKitSampleRate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -357,11 +338,14 @@
 		};
 		E747D0D4230E82920099E1D4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3569F528CEC8310E50388177 /* Pods-AudioKitSampleRate.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z55EW6H4D7;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = AudioKitSampleRate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

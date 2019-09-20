@@ -18,36 +18,55 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GbE-Rd-f7Z">
-                                <rect key="frame" x="0.0" y="44" width="414" height="618"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="87D-2E-Rqd">
-                                <rect key="frame" x="0.0" y="662" width="414" height="200"/>
-                                <color key="backgroundColor" red="1" green="0.86666666670000003" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="41"/>
-                                <color key="tintColor" red="1" green="0.17254901959999999" blue="0.17217700969999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="play"/>
-                                <connections>
-                                    <action selector="onButtonPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Eha-MJ-IhU"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ho8-TA-8ha">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="87D-2E-Rqd" userLabel="start">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="266"/>
+                                        <color key="backgroundColor" red="1" green="0.86666666670000003" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="41"/>
+                                        <color key="tintColor" red="1" green="0.17254901959999999" blue="0.17217700969999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="startEngine"/>
+                                        <connections>
+                                            <action selector="onStartEngine:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3Gi-wU-YtX"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bYh-11-fiq">
+                                        <rect key="frame" x="0.0" y="276" width="414" height="266"/>
+                                        <color key="backgroundColor" red="1" green="0.86666666670000003" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="41"/>
+                                        <color key="tintColor" red="1" green="0.17254901959999999" blue="0.17217700969999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="load &amp; play"/>
+                                        <connections>
+                                            <action selector="onLoadAndPlay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="g1c-HM-Qzg"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q0W-lF-Vvv">
+                                        <rect key="frame" x="0.0" y="552" width="414" height="266"/>
+                                        <color key="backgroundColor" red="1" green="0.86666666670000003" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="41"/>
+                                        <color key="tintColor" red="1" green="0.17254901959999999" blue="0.17217700969999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="stop"/>
+                                        <connections>
+                                            <action selector="onStop:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RBG-sJ-ai1"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="87D-2E-Rqd" firstAttribute="top" secondItem="GbE-Rd-f7Z" secondAttribute="bottom" id="0m2-9D-Ne6"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="87D-2E-Rqd" secondAttribute="trailing" id="KYy-vH-uaE"/>
-                            <constraint firstItem="GbE-Rd-f7Z" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Obc-ga-14j"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="87D-2E-Rqd" secondAttribute="bottom" id="aXo-Ih-cXF"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="GbE-Rd-f7Z" secondAttribute="bottom" constant="200" id="dbr-Fm-xoz"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="GbE-Rd-f7Z" secondAttribute="trailing" id="j1o-HD-yxs"/>
-                            <constraint firstItem="87D-2E-Rqd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="mx9-cx-azS"/>
-                            <constraint firstItem="GbE-Rd-f7Z" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="wyV-m6-0cB"/>
+                            <constraint firstItem="Ho8-TA-8ha" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="LAy-Aw-f0U"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Ho8-TA-8ha" secondAttribute="bottom" id="ZKx-Qz-H7p"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ho8-TA-8ha" secondAttribute="trailing" id="naD-dg-4Xu"/>
+                            <constraint firstItem="Ho8-TA-8ha" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="qxv-Aa-o2r"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="videoContainer" destination="GbE-Rd-f7Z" id="I1K-g6-r9H"/>
+                        <outlet property="loadAndPlayButton" destination="bYh-11-fiq" id="r5j-W8-R75"/>
+                        <outlet property="startEngineButton" destination="87D-2E-Rqd" id="4nI-ct-zRs"/>
+                        <outlet property="stopButton" destination="Q0W-lF-Vvv" id="YrM-dD-jYI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

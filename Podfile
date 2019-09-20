@@ -3,6 +3,6 @@ use_frameworks!
 
 target 'AudioKitSampleRate' do
   inherit! :search_paths
-  pod 'AudioKit', '4.7.2'
+  pod 'AudioKit', :git => 'https://github.com/AudioKit/AudioKit', :commit => '3e6945a'
 
 end
