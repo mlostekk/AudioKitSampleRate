@@ -23,8 +23,12 @@ class ViewController: UIViewController {
     /// Instance of the AKPlayer
     private var audioPlayer: AudioKitPlayer? = nil
 
+    /// Audio input mapper
+    private let audioInputMapper: AudioInputMapper
+
     /// Default constructor, shall not pass
     required init?(coder aDecoder: NSCoder) {
+        audioInputMapper = AudioInputMapper()
         super.init(coder: aDecoder)
     }
 
@@ -81,6 +85,8 @@ class ViewController: UIViewController {
         do {
             try AKSettings.setSession(category: .playAndRecord, with: .defaultToSpeaker)
             try AudioKit.start()
+            audioInputMapper.setup()
+            audioInputMapper.start()
         } catch {
             fatalError("coult not start audiokit")
         }
