@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E70FB2DC232679B9008432EF /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E70FB2DB232679B9008432EF /* AudioKit.framework */; };
-		E70FB2DE232679C0008432EF /* AudioKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E70FB2DB232679B9008432EF /* AudioKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E747D0C4230E82900099E1D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E747D0C3230E82900099E1D4 /* AppDelegate.swift */; };
 		E747D0C6230E82900099E1D4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E747D0C5230E82900099E1D4 /* ViewController.swift */; };
 		E747D0C9230E82900099E1D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E747D0C7230E82900099E1D4 /* Main.storyboard */; };
@@ -26,7 +24,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E70FB2DE232679C0008432EF /* AudioKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -34,7 +31,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		E70FB2DB232679B9008432EF /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioKit.framework; sourceTree = SOURCE_ROOT; };
 		E747D0C0230E82900099E1D4 /* AudioKitSampleRate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioKitSampleRate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E747D0C3230E82900099E1D4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E747D0C5230E82900099E1D4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -54,26 +50,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E70FB2DC232679B9008432EF /* AudioKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		052D0902A9F79AC9A363CCAE /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		E747D0B7230E82900099E1D4 = {
 			isa = PBXGroup;
 			children = (
 				E747D0C2230E82900099E1D4 /* AudioKitSampleRate */,
 				E747D0C1230E82900099E1D4 /* Products */,
-				052D0902A9F79AC9A363CCAE /* Pods */,
 			);
 			sourceTree = "<group>";
 			wrapsLines = 0;
@@ -89,7 +76,6 @@
 		E747D0C2230E82900099E1D4 /* AudioKitSampleRate */ = {
 			isa = PBXGroup;
 			children = (
-				E70FB2DB232679B9008432EF /* AudioKit.framework */,
 				E7855B7D230E866B000FB9BD /* sound.wav */,
 				E7855B7B230E845E000FB9BD /* bunny.mp4 */,
 				E747D0C3230E82900099E1D4 /* AppDelegate.swift */,

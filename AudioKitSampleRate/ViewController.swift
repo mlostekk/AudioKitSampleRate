@@ -8,23 +8,22 @@
 
 import UIKit
 import AVFoundation
-import AudioKit
 
 class ViewController: UIViewController {
 
     /// Ui stuff
-    @IBOutlet weak var startEngineButton: UIButton!
-    @IBOutlet weak var loadAndPlayButton: UIButton!
-    @IBOutlet weak var stopButton: UIButton!
-
-    /// The main output mixer (after the amplitude tracker)
-    private var masterMixer:  AKMixer?
+    @IBOutlet weak var startVP1:         UIButton!
+    @IBOutlet weak var startVP2:         UIButton!
+    @IBOutlet weak var startVP3:       UIButton!
+    @IBOutlet weak var startNoVP1:       UIButton!
+    @IBOutlet weak var stopButton:       UIButton!
+    @IBOutlet weak var debugLabel:       UILabel!
 
     /// Instance of the AKPlayer
-    private var audioPlayer: AudioKitPlayer? = nil
+    private var        audioPlayer:      AudioAVPlayer? = nil
 
     /// Audio input mapper
-    private let audioInputMapper: AudioInputMapper
+    private let        audioInputMapper: AudioInputMapper
 
     /// Default constructor, shall not pass
     required init?(coder aDecoder: NSCoder) {
@@ -32,109 +31,130 @@ class ViewController: UIViewController {
         super.init(coder: aDecoder)
     }
 
-
-    /// Start audiokit
-    @IBAction func onStartEngine(_ sender: Any) {
-        startEngineButton.setEnabled(false)
-        loadAndPlayButton.setEnabled(true)
-        startEngine()
+    /// Just observe some stuff
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        Timer.scheduledTimer(withTimeInterval: 0.1,
+                             repeats: true) { [weak self] _ in
+            let session = AVAudioSession.sharedInstance()
+            self?.debugLabel.text = """
+                                    sampleRate : \(session.sampleRate)
+                                    mode       : \(session.mode.rawValue)
+                                    inputGain  : \(session.inputGain)
+                                    category   : \(session.category.rawValue)
+                                    cat options: \(session.categoryOptions.rawValue)
+                                    """
+        }
     }
 
-    /// Start audio
-    @IBAction func onLoadAndPlay(_ sender: Any) {
-        loadAndPlayButton.setEnabled(false)
+    @IBAction func onStartVP1(_ sender: Any) {
+        self.switchButtons(false)
+        createAudio()
+        playAudio()
+        startEngine(true)
+    }
+
+    @IBAction func onStartVP2(_ sender: Any) {
+        self.switchButtons(false)
+        createAudio()
+        startEngine(true)
+        playAudio()
+    }
+
+    @IBAction func onStartVP3(_ sender: Any) {
+        self.switchButtons(false)
+        startEngine(true)
+        createAudio()
+        playAudio()
+    }
+
+    @IBAction func onStartNoVP1(_ sender: Any) {
+        self.switchButtons(false)
+        startEngine(false)
+        createAudio()
+        playAudio()
+    }
+
+    @IBAction func onStop(_ sender: Any) {
+        stopButton.setEnabled(false)
+        switchButtons(true)
+        // reset
+        audioPlayer?.stop()
+        audioPlayer = nil
+        audioInputMapper.stop()
+        audioInputMapper.tearDown()
+    }
+
+    /// Start engine
+    func startEngine(_ voiceProcessing: Bool) {
+        // start
+        do {
+            // configure session
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .measurement, options: .defaultToSpeaker)
+            try AVAudioSession.sharedInstance().setActive(true)
+            // setup and start input mapper
+            audioInputMapper.setup(voiceProcessing)
+            audioInputMapper.start()
+        } catch {
+            fatalError("could not setup audio")
+        }
+    }
+
+    /// Create audio
+    func createAudio() {
         // reset
         audioPlayer?.stop()
         audioPlayer = nil
         // restart
         let url = Bundle.main.url(forResource: "sound", withExtension: "wav")!
-        audioPlayer = AudioKitPlayer(viewController: self, resourceUrl: url)
-        audioPlayer?.schedulePlayback()
+        audioPlayer = AudioAVPlayer(resourceUrl: url)
+    }
+
+    /// Start audio
+    func playAudio() {
+        audioPlayer?.play()
         stopButton.setEnabled(true)
     }
 
-    /// Stop audio
-    @IBAction func onStop(_ sender: Any) {
-        stopButton.setEnabled(false)
-        loadAndPlayButton.setEnabled(true)
-        // reset
-        audioPlayer?.stop()
-        audioPlayer = nil
-    }
-
-    /// View loaded
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // global settings
-        AKAudioFile.cleanTempDirectory()
-        AKSettings.defaultToSpeaker = true
-        AKSettings.enableRouteChangeHandling = true
-        AKSettings.enableCategoryChangeHandling = true
-        AKSettings.audioInputEnabled = true
-        AKSettings.playbackWhileMuted = false
-        AKSettings.enableLogging = true
-        // main mixer
-        masterMixer = AKMixer()
-    }
-
-    /// Start engine
-    func startEngine() {
-        // connect main nodes
-        AudioKit.output = masterMixer!
-        // start
-        do {
-            try AKSettings.setSession(category: .playAndRecord, with: .defaultToSpeaker)
-            try AudioKit.start()
-            audioInputMapper.setup()
-            audioInputMapper.start()
-        } catch {
-            fatalError("coult not start audiokit")
-        }
-    }
-
-    /// Attach output
-    func attach(audioPlayer: AKAudioPlayer) {
-        audioPlayer >>> masterMixer!
+    /// Disable all buttons except the given one
+    private func switchButtons(_ enable: Bool) {
+        startVP1.setEnabled(enable)
+        startVP2.setEnabled(enable)
+        startVP3.setEnabled(enable)
+        startNoVP1.setEnabled(enable)
+        stopButton.setEnabled(!enable)
     }
 }
 
 
-/// Audiokit implementation
-class AudioKitPlayer {
+/// AVFoundation implementation
+class AudioAVPlayer {
 
     /// Instance of the AKPlayer
-    // We only need to make it optional so that we can refer to it in the callback in 'init'
-    private var audioKitPlayer: AKAudioPlayer? = nil
+    private let player: AVAudioPlayer
 
     /// Construction
-    init?(viewController: ViewController, resourceUrl: URL) {
-        // create and prepare player
+    init?(resourceUrl: URL) {
         do {
-            let audioFile = try AKAudioFile(forReading: resourceUrl)
-            let player = try AKAudioPlayer(file: audioFile, looping: false, lazyBuffering: false)
-            audioKitPlayer = player
-            // attach
-            viewController.attach(audioPlayer: player)
-        } catch let ex {
-            fatalError("coult not create audioplayer -> \(ex)")
+            player = try AVAudioPlayer(contentsOf: resourceUrl)
+            player.volume = 1.0
+            player.prepareToPlay()
+        } catch {
+            print("File Not Found")
             return nil
         }
     }
 
     /// Play audio file
-    func schedulePlayback() {
-        assert(AudioKit.engine.isRunning)
-        guard let player = audioKitPlayer else { return }
-        let avTime = AKAudioPlayer.secondsToAVAudioTime(hostTime: mach_absolute_time(), time: 1)
-        player.play(from: 0, to: player.duration, avTime: avTime)
+    func play() {
+        player.currentTime = 0
+        player.play()
     }
-
 
     /// Pause playback
     func stop() {
-        audioKitPlayer?.stop()
+        player.stop()
     }
-
 }
 
 extension UIButton {

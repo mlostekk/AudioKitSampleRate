@@ -21,36 +21,72 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ho8-TA-8ha">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="87D-2E-Rqd" userLabel="start">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="266"/>
-                                        <color key="backgroundColor" red="1" green="0.86666666670000003" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="41"/>
-                                        <color key="tintColor" red="1" green="0.17254901959999999" blue="0.17217700969999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="startEngine"/>
-                                        <connections>
-                                            <action selector="onStartEngine:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3Gi-wU-YtX"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bYh-11-fiq">
-                                        <rect key="frame" x="0.0" y="276" width="414" height="266"/>
-                                        <color key="backgroundColor" red="1" green="0.86666666670000003" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="41"/>
-                                        <color key="tintColor" red="1" green="0.17254901959999999" blue="0.17217700969999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="load &amp; play"/>
-                                        <connections>
-                                            <action selector="onLoadAndPlay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="g1c-HM-Qzg"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="mz3-bM-d6h">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="197"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="87D-2E-Rqd" userLabel="start">
+                                                <rect key="frame" x="0.0" y="0.0" width="202" height="197"/>
+                                                <color key="backgroundColor" red="0.97647058819999999" green="0.97254901959999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="37"/>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="VP1"/>
+                                                <connections>
+                                                    <action selector="onStartVP1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bSl-0b-Enk"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xbd-td-ah1" userLabel="start">
+                                                <rect key="frame" x="212" y="0.0" width="202" height="197"/>
+                                                <color key="backgroundColor" red="0.26299532409999998" green="0.97680455450000003" blue="0.25407801009999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="37"/>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="VP3"/>
+                                                <connections>
+                                                    <action selector="onStartVP3:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jAh-rH-vvP"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="3HX-LA-FRb">
+                                        <rect key="frame" x="0.0" y="207" width="414" height="197"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0wv-Z1-w1W" userLabel="start">
+                                                <rect key="frame" x="0.0" y="0.0" width="202" height="197"/>
+                                                <color key="backgroundColor" red="0.97647058819999999" green="0.97254901959999995" blue="0.76211199805068497" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="37"/>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="VP2"/>
+                                                <connections>
+                                                    <action selector="onStartVP2:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hdU-r1-g9W"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GUt-ah-agq" userLabel="start">
+                                                <rect key="frame" x="212" y="0.0" width="202" height="197"/>
+                                                <color key="backgroundColor" red="0.26299532409999998" green="0.97680455450000003" blue="0.65056238509999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="37"/>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="NoVP1"/>
+                                                <connections>
+                                                    <action selector="onStartNoVP1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zfl-KK-KPo"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                     <button opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q0W-lF-Vvv">
-                                        <rect key="frame" x="0.0" y="552" width="414" height="266"/>
-                                        <color key="backgroundColor" red="1" green="0.86666666670000003" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <rect key="frame" x="0.0" y="414" width="414" height="197"/>
+                                        <color key="backgroundColor" red="0.33677030460000001" green="0.118801356" blue="0.094085846279999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="41"/>
-                                        <color key="tintColor" red="1" green="0.17254901959999999" blue="0.17217700969999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="stop"/>
                                         <connections>
                                             <action selector="onStop:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RBG-sJ-ai1"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Iw-BC-n9U">
+                                        <rect key="frame" x="0.0" y="621" width="414" height="197"/>
+                                        <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -64,8 +100,11 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="loadAndPlayButton" destination="bYh-11-fiq" id="r5j-W8-R75"/>
-                        <outlet property="startEngineButton" destination="87D-2E-Rqd" id="4nI-ct-zRs"/>
+                        <outlet property="debugLabel" destination="3Iw-BC-n9U" id="Txi-Ks-YBN"/>
+                        <outlet property="startNoVP1" destination="GUt-ah-agq" id="qGI-O3-r5b"/>
+                        <outlet property="startVP1" destination="87D-2E-Rqd" id="ZRK-mZ-bnU"/>
+                        <outlet property="startVP2" destination="0wv-Z1-w1W" id="wah-cS-r3g"/>
+                        <outlet property="startVP3" destination="xbd-td-ah1" id="Dro-Jz-11z"/>
                         <outlet property="stopButton" destination="Q0W-lF-Vvv" id="YrM-dD-jYI"/>
                     </connections>
                 </viewController>

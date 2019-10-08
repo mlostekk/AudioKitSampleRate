@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AudioInputMapper : NSObject
 
     /// Setup down audio input
-    - (void)setup;
+    - (void)setup:(bool)voiceProcessingEnabled;
 
     /// Stop audio input
     - (void)tearDown;

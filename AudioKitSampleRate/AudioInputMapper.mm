@@ -13,9 +13,9 @@
 #define kInputBus   1
 
 /// Generic logging
-#define Log(...)      NSLog(@"~~~ AudioInputMapper: %@", [NSString stringWithFormat:@"~~~ AudioInputMapper: %@", __VA_ARGS__]);
+#define Log(...)      NSLog(@"%@", [NSString stringWithFormat:__VA_ARGS__]);
 /// Error logging
-#define LogError(...) NSLog(@"~~~ AudioInputMapper: %@", [NSString stringWithFormat:@"~~~ AudioInputMapper: %@", __VA_ARGS__]);
+#define LogError(...) NSLog(@"%@", [NSString stringWithFormat:__VA_ARGS__]);
 
 /// Remove newline chars
 #define TrimNewLine(string) [[string componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@" "]
@@ -69,6 +69,22 @@ static OSStatus audioInputCallback(void __unused *inRefCon,
 }
 
 /*********************************************************************************************************
+ * The audio output callback
+ */
+static OSStatus audioOutputCallback(void *inRefCon,
+                                    AudioUnitRenderActionFlags *ioActionFlags,
+                                    const AudioTimeStamp *inTimeStamp,
+                                    UInt32 inBusNumber,
+                                    UInt32 inNumberFrames,
+                                    AudioBufferList *ioData)
+{
+    // Notes: ioData contains buffers (may be more than one!)
+    // Fill them up as much as you can. Remember to set the size value in each buffer to match how
+    // much data is in the buffer.
+    return noErr;
+}
+
+/*********************************************************************************************************
  * Main instance to setup audio input processing
  */
 @implementation AudioInputMapper
@@ -76,6 +92,7 @@ static OSStatus audioInputCallback(void __unused *inRefCon,
         AudioUnit audioUnit;
         uint32_t  blockSize;
         uint32_t  sampleRate;
+        bool      lastVoiceProcessingConfig;
     }
 
     /// Construction with dependencies resolved by factory
@@ -93,10 +110,11 @@ static OSStatus audioInputCallback(void __unused *inRefCon,
 #pragma mark - Starting
 
     /// Setup audio chain
-    - (void)setup
+    - (void)setup:(bool)voiceProcessingEnabled
     {
+        lastVoiceProcessingConfig = voiceProcessingEnabled;
         // TODO check if this is fixing all issues, if so, remove the code, if not, run
-        // [self setupAudioSession];
+        [self setupAudioSession];
         [self setupIOUnit];
     }
 
@@ -110,6 +128,13 @@ static OSStatus audioInputCallback(void __unused *inRefCon,
         NSError *error = nil;
         [sessionInstance setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:&error];
         VerifyError((OSStatus) error.code, "couldn't set session's audio category");
+
+        //        [sessionInstance overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
+        //        VerifyError((OSStatus) error.code, "couldn't override output to speaker");
+        //
+        //        // set to measurement
+        //        [sessionInstance setMode:AVAudioSessionModeMeasurement error:&error];
+        //        VerifyError((OSStatus) error.code, "couldn't set session's audio mode");
 
         // set the buffer duration
         NSTimeInterval bufferDuration = (double) blockSize / (double) sampleRate;
@@ -142,7 +167,12 @@ static OSStatus audioInputCallback(void __unused *inRefCon,
         [[AVAudioSession sharedInstance] setActive:YES error:&error];
         VerifyError((OSStatus) error.code, "couldn't set session active");
 
-        Log(@"AudioSession set up");
+        //        // override to speaker
+        //        UInt32 audioRouteOverride = kAudioSessionOverrideAudioRoute_Speaker;
+        //        VerifyError(AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute,
+        //                                            sizeof(audioRouteOverride),
+        //                                            &audioRouteOverride),
+        //                    "couldn't override route to speaker");
     }
 
     /// Setup the audio input and output
@@ -151,7 +181,7 @@ static OSStatus audioInputCallback(void __unused *inRefCon,
         // Create a new instance of AURemoteIO
         AudioComponentDescription desc;
         desc.componentType         = kAudioUnitType_Output;
-        desc.componentSubType      = kAudioUnitSubType_VoiceProcessingIO;
+        desc.componentSubType      = lastVoiceProcessingConfig ? kAudioUnitSubType_VoiceProcessingIO : kAudioUnitSubType_RemoteIO;
         desc.componentManufacturer = kAudioUnitManufacturer_Apple;
         desc.componentFlags        = 0;
         desc.componentFlagsMask    = 0;
@@ -204,7 +234,15 @@ static OSStatus audioInputCallback(void __unused *inRefCon,
                                          kOutputBus,
                                          &ioFormat,
                                          sizeof(ioFormat)),
-                    "couldn't set the output client format on AURemoteIO");
+                    "couldn't set the output client format on AudioUnit");
+
+        //        VerifyError(AudioUnitSetProperty(audioUnit,
+        //                                         kAUVoiceIOProperty_BypassVoiceProcessing,
+        //                                         kAudioUnitScope_Global,
+        //                                         kOutputBus,
+        //                                         &off,
+        //                                         sizeof(off)),
+        //                    "couldn't disable voice processing on output");
 
         // Set the MaximumFramesPerSlice property. This property is used to describe to an audio unit the maximum number
         // of samples it will be asked to produce on any single given call to AudioUnitRender
@@ -251,20 +289,55 @@ static OSStatus audioInputCallback(void __unused *inRefCon,
                                          sizeof(renderCallback)),
                     "couldn't set render callback on AURemoteIO");
 
-        // Prevent buffer allocation
-        UInt32 allocateBuffer = 0;
+        //        // Set the output callback on AudioUnit
+        //        renderCallback.inputProc       = audioOutputCallback;
+        //        renderCallback.inputProcRefCon = NULL;
+        //        VerifyError(AudioUnitSetProperty(audioUnit,
+        //                                         kAudioUnitProperty_SetRenderCallback,
+        //                                         kAudioUnitScope_Global,
+        //                                         kOutputBus,
+        //                                         &renderCallback,
+        //                                         sizeof(renderCallback)),
+        //                    "couldn't set render callback on AudioUnit");
+
+        // Prevent buffer allocation (because we are passing our own buffer)
         VerifyError(AudioUnitSetProperty(audioUnit,
                                          kAudioUnitProperty_ShouldAllocateBuffer,
                                          kAudioUnitScope_Output,
                                          kInputBus,
-                                         &allocateBuffer,
-                                         sizeof(allocateBuffer)),
+                                         &off,
+                                         sizeof(off)),
                     "couldn't disable buffer allocation");
 
-        // Initialize the AURemoteIO instance
-        VerifyError(AudioUnitInitialize(audioUnit), "couldn't initialize AURemoteIO instance");
+        // Enable automatic gain control for input
+        VerifyError(AudioUnitSetProperty(audioUnit,
+                                         kAUVoiceIOProperty_VoiceProcessingEnableAGC,
+                                         kAudioUnitScope_Global,
+                                         kInputBus,
+                                         &off,
+                                         sizeof(off)),
+                    "couldn't disable AGC for input");
 
-        Log(@"AudioUnit set up");
+        // Disable automatic gain control for output
+        VerifyError(AudioUnitSetProperty(audioUnit,
+                                         kAUVoiceIOProperty_VoiceProcessingEnableAGC,
+                                         kAudioUnitScope_Global,
+                                         kOutputBus,
+                                         &off,
+                                         sizeof(off)),
+                    "couldn't disable AGC for output");
+
+        // Initialize the AudioUnit instance
+        OSStatus err = AudioUnitInitialize(audioUnit);
+        if(err)
+        {
+            LogError(@"couldn't initialize AudioUnit instance");
+        }
+        else
+        {
+            Log(@"AudioUnit set up");
+        }
+
     }
 
     /// Start the io unit
@@ -300,8 +373,20 @@ static OSStatus audioInputCallback(void __unused *inRefCon,
     /// Tear down audio engine
     - (void)tearDown
     {
-        // TODO do we need to do something here?
-        Log(@"AudioUnit teared down");
+        OSStatus err = AudioUnitUninitialize(audioUnit);
+        if(err)
+        {
+            LogError(@"couldn't un-initialize AudioUnit instance");
+        }
+        err = AudioComponentInstanceDispose(audioUnit);
+        if(err)
+        {
+            LogError(@"couldn't dispose AudioUnit instance");
+        }
+        else
+        {
+            Log(@"AudioUnit teared down");
+        }
     }
 
 #pragma mark - Notification Callbacks
@@ -379,7 +464,7 @@ static OSStatus audioInputCallback(void __unused *inRefCon,
 
         usleep(25000); //wait here for some time to ensure that we don't delete these objects while they are being accessed elsewhere
 
-        [self setup];
+        [self setup: lastVoiceProcessingConfig];
         [self start];
 
         _audioChainIsBeingReconstructed = NO;
