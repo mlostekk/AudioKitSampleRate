@@ -90,7 +90,7 @@ class ViewController: UIViewController {
         // start
         do {
             // configure session
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .measurement, options: .defaultToSpeaker)
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
             try AVAudioSession.sharedInstance().setActive(true)
             // setup and start input mapper
             audioInputMapper.setup(voiceProcessing)
